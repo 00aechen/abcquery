@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+
+<style>
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+#top-b {
+  border-style: solid;
+  border-top-width: 20px;
+  border-top-color: #333;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+}
+
+#container-fluid {
+  background-color: white;
+  padding: 50px;
+  border-style: solid;
+  border-top-width: 20px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-top-color: #CC5734;
+  height: 550px;
+}
+h1 {
+  font-family: 'Raleway', Sans-serif;
+  color: #333;
+  font-size: 70px;
+  padding: 0px;
+}
+
+h2 {
+  font-family: 'Raleway', Sans-serif;
+  color: #CC5734;
+  font-size: 15px;
+  padding-bottom: 30px;
+}
+
+h3 {
+  font-family: 'Raleway', Sans-serif;
+  color: white;
+  font-size: 10px;
+  text-align: center;
+  padding-top: 100px;
+}
+
+ul{
+  font-family: 'Raleway', Sans-serif;
+  color: light-blue;
+  font-size: 20px;
+}
+
+.misc-links{  
+  padding: 20px;
+  text-color: white;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  background-color: #333;
+}
+
+.box {
+  width: 100%;
+  text-align: center;
+  font-family: 'Raleway', Sans-serif;
+}
+
+
+body {
+    padding-top: 50px;
+}
+.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: -1px;
+    padding: 6px 20px;
+}
+.input-group-btn .btn-group {
+    display: flex !important;
+}
+.btn-group .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+.btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.btn-group .form-horizontal .btn[type="submit"] {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+.form-group .form-control:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+@media screen and (min-width: 768px) {
+    #adv-search {
+        width: 500px;
+        margin: 0 auto;
+    }
+    .dropdown.dropdown-lg {
+        position: static !important;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        min-width: 500px;
+    }
+}
+
+
+</style>
+
+
+<body>
+<div id="top-b"></div>
+<div id="container-fluid">
+
+  <div class="text-center text-responsive">
+    <h1><b><span style="color:#CC5734">ABC</span>Books Tags</b></h1>
+    <h2>Explore the student tag data from English 385, Spring 2016</h2>    
+  </div>
+
+<div class="box">
+    <input type="search" id="search" placeholder="Search By Book Title" size=60px />
+</div>
+  
+
+<!---->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+            <div class="input-group" id="adv-search">
+                <input type="text" class="form-control" placeholder="Search for snippets" />
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <form class="form-horizontal" role="form">
+                                  <div class="form-group">
+                                    <label for="filter">Filter by</label>
+                                    <select class="form-control">
+                                        <option value="0" selected>All Snippets</option>
+                                        <option value="1">Featured</option>
+                                        <option value="2">Most popular</option>
+                                        <option value="3">Top rated</option>
+                                        <option value="4">Most commented</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="contain">Author</label>
+                                    <input class="form-control" type="text" />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="contain">Contains the words</label>
+                                    <input class="form-control" type="text" />
+                                  </div>
+                                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </form>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+
+<!---->
+
+
+
+
+
+
+
+<div>
+  <h3>Annie Chen Spring 2017</h3>
+</div>
+  
+  
+</div>
+
+<div class = "misc-links">
+  <a href ="#" style= "color: #cccccc">About</a>
+  <a style= "color: #cccccc">|</a>
+  <a href ="#" style= "color: #cccccc">Help</a>
+  <a style= "color: #cccccc">|</a>
+  <a href ="#" style= "color: #cccccc">ABCBooks</a>
+</div>
+</body>
+</html>

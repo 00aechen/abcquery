@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from handle_query import handle_query
 
 import json
 
@@ -22,41 +23,46 @@ def index(request):
 	return HttpResponse(template.render(context, request))
 
 
-def search_test(request):
-	global query_var
-	print "search_test was called"
-	query = request.GET.get('q', '')
-	t = loader.get_template('searchapp/search_test.html')
-	context={ 'query': query,}
-	print "This is the context: ", context
-	query_var = query
-	print "q: ", query_var
-	return HttpResponse(t.render(context, request))
+# def search_test(request):
+# 	global query_var
+# 	print "search_test was called"
+# 	query = request.GET.get('q', '')
+# 	t = loader.get_template('searchapp/search_test.html')
+# 	context={ 'query': query,}
+# 	print "This is the context: ", context
+# 	query_var = query
+# 	print "q: ", query_var
+# 	return HttpResponse(t.render(context, request))
 
-def results_test(request):
-	global query_var
-	print "results_test was called"
-	t = loader.get_template('searchapp/results_test.html')
-	query = query_var
-	print "query: ", query
-	context={'query':query,}
-	print "This is the context: ", context 
-	return HttpResponse(t.render(context, request))
+# def results_test(request):
+# 	global query_var
+# 	print "results_test was called"
+# 	t = loader.get_template('searchapp/results_test.html')
+# 	query = query_var
+# 	print "query: ", query
+# 	context={'query':query,}
+# 	print "This is the context: ", context 
+# 	return HttpResponse(t.render(context, request))
 	
 
 def search(request):
 	result_list = []
 
 	if request.method == 'POST':
-		query = request.POST['query'].strip()
+		query = request.POST.get('search_box')
+		# query = request.POST
 
 		if query:
 			result_list = handle_query(query)
 
 	context = {
+		'query': query,
 		'result_list': result_list
 	}
-	return render(request, 'search_results.html', context)
+	print "IN VIEWS: ", query
+	return render(request, 'searchapp/search_results.html', context)
+
+
 
 
 def about(request):

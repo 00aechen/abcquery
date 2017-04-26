@@ -1,44 +1,88 @@
+<!DOCTYPE html>
+<html>
 {% load staticfiles %}
 
-{% block title %}Search{% endblock %}
+<head>
+<!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
-{% block body_block %}
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel = "stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    
+</head>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+body {
+    font-family: 'Roboto Condensed';
+}
+
+.form-control {
+    max-width: 500px;
+}
+.results {
+    padding: 50px;
+    max-width: 800px;
+    text-align: left;
+}
+
+.page-header {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}
+</style>
+
+<!-- {% block body_block %} -->
     <div class="page-header">
         <h1>Search Results</h1>
     </div>
 
     <div class="row">
 
-        <div class="panel panel-primary">
+        <div class="panel " align='center'>
             <br/>
-
-            <form class="form-inline" id="user_form" method="post" action="{% url 'search' %}">
+            <form method='post' action="{% url 'search' %}" style="margin: 0">
                 {% csrf_token %}
-                <!-- Display the search form elements here -->
-                <input class="form-control" type="text" size="50" name="query" value="" id="query" />
-                <input class="btn btn-primary" type="submit" name="submit" value="Search" />
-                <br />
+                <input id="search_box" type="text" name="search_box"  placeholder="Search..." >
+                <button id="search_submit" type="submit" ><span class='glyphicon glyphicon-search'></span></button>
             </form>
-
-            <div class="panel">
-                {% if result_list %}
+            <div class='results'>
+                <div class="panel">
                     <div class="panel-heading">
-                    <h3 class="panel-title">Results</h3>
-                    <!-- Display search results in an ordered list -->
-                    <div class="panel-body">
-                        <div class="list-group">
-                            {% for result in result_list %}
-                                <div class="list-group-item">
-                                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result }}</a></h4>
-                                    <!-- <p class="list-group-item-text">{{ result.summary }}</p> -->
-                                </div>
-                            {% endfor %}
+                         <h3>Search query: "{{query}}"</h3>
+                        {% if result_list %}
+                        <h3 class="panel-title">Results Returned: {{result_list|length}}</h3>
+                        <!-- Display search results in an ordered list -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                {% for result in result_list %}
+                                    <div class="list-group-item">
+                                        <h4 class="list-group-item-heading"><em>{{ result.title }}</em></h4><hr>
+                                        <p>Total tag count: {{ result.tag_count }}</p>
+                                        <p>Unique tag count: {{ result.utag_count }}</p>
+                                        <p>Page count: {{ result.page_count }}</p>
+                                        <p>Word count: {{ result.transcr_len }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 {% endif %}
                 </div>
             </div>
- </div>
+        </div>
 
-{% endblock %}
+<!-- {% endblock %} -->
+
+</html>

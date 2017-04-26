@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang = 'en'>
 
 <head>
@@ -14,6 +15,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<link href="{% static 'css/master.css' %}" rel="stylesheet">
 
 </head>
 
@@ -25,20 +27,10 @@ body {
 	padding-right:20%;
 }
 h1 {
-	font-family: 'Raleway', Sans-serif;
 	font-size: 40px;
 }
 
-h2 {
-	font-family: 'Raleway', Sans-serif;
-}
-
-h3 {
-	font-family: 'Raleway', Sans-serif;
-}
-
 p {
-	font-family: 'Raleway', Sans-serif;
 	font-size: 15px;
 }
 
@@ -46,12 +38,39 @@ p {
 
 <body>
 
-
+<!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="{% url 'index' %}">ABCQuery</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{% url 'about' %}">About</a>
+                    </li>
+                    <li>
+                        <a href="#feedback/">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
 <h1 align = 'center'>{{Title}}</h1>
 
 <h3>ABC Books Project and ENG 385</h3>
-<p>ABCQuery uses data from Princeton University's ABC Books project, a digital archive of rare 19th century children's alphabet books from the Cotsen Children's Library collection. <br><br>The data consists of book data (scans of book images and book transcriptions), book metadata (such as publication date and publication location), and a tag dataset consisting of terms associated with each page of each book. These tags were input into the digital archive by students of Professor William Gleason's Spring 2016 ENG 385 (Children's Literature) class. <br><br>Visit the archive <a href ="https://etc.princeton. edu/abcbooks/">here</a>.</p>
+<p>ABCQuery uses data from Princeton University's ABC Books project, a digital archive of rare 19th century children's alphabet books from the Cotsen Children's Library collection. <br><br>The data consists of book data (scans of book images and book transcriptions), book metadata (such as publication date and publication location), and a tag dataset consisting of terms associated with each page of each book. These tags were input into the digital archive by students of Professor William Gleason's Spring 2016 ENG 385 (Children's Literature) class. <br><br>Visit the archive <a href ="https://etc.princeton.edu/abcbooks/">here</a>.</p>
 
 <h3>Stack</h3>
 <p>ABCQuery is built using Django (back end) and Bootstrap (front end).</p>
@@ -62,5 +81,9 @@ p {
 </div>
 
 </body>
+<!-- jQuery -->
+    <script src="{% static "js/jquery.js" %}"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
 </html>

@@ -144,7 +144,7 @@ def handle_tags(query):
 		for index, word in enumerate(query_words):
 			# print index, word
 			# if word == ">" or word == "<" or word == "=":
-			if words in kwords:
+			if word in kwords:
 				# print "before tag_comp"
 				# print "index + 1>>>>>> ", query_words[index+1]
 				book_list = tag_comp(word, query_words[index+1])
@@ -173,7 +173,7 @@ def page_comp(comparison_char, query_num):
 	global json_data
 
 	book_list = []
-
+	print "PLUS ONE ", query_num
 	# print "Comparison: ", comparison_char
 	if not query_num.isdigit():
 		print "invalid number"
@@ -248,7 +248,7 @@ def transcr_comp(comparison_char, query_num):
 	global json_data
 
 	book_list = []
-
+	print "PLUS ONE ", query_num
 	# print "Comparison: ", comparison_char
 	if not query_num.isdigit():
 		print "invalid number"
@@ -319,32 +319,69 @@ def handle_query(query):
 
 	# print "JSON DATA ", json_data
 
+	# remove stopwords
+	filtered_query = query.lower()
+	print "QUERRRRRYYY ", filtered_query
+	stopwrds = ['than', 'as']
+	# for q in sub_queries:
+	# 	print "!!!!!! ", q
+	# 	if q in stopwrds:
+	# 		print "YES", q
+	# 		sub_queries.replace(q, '')
+
+	# print "FILTERED ", sub_queries
+
+
 	# splice raw query into multiple conditions if appropriate
-	sub_queries = query.lower().split(" ")
-	print ">>>>SUBQUERIES ", sub_queries
+	raw_sub_queries = query.lower().split(" ")
+	print ">>>>SUBQUERIES ", raw_sub_queries
+
+	sub_queries=raw_sub_queries[:]
+	for q in raw_sub_queries:
+		print q
+		if q in stopwrds:
+			sub_queries.remove(q)
+
+	print "FILTERED ", sub_queries
 
 	# lists of key query terms
 	tag_queries = ['tags', 'tag', 'terms', 'term']
 	page_queries = ['page', 'pages']
-	transcr_queries = ['transcription', 'text', 'words']
+	transcr_queries = ['transcription', 'text', 'words', 'length']
 	metadata_queries = ['location', 'place', 'date', 'year', 'metadata']
 
 	# for sub_q in sub_queries:
 	# 	print "query word: ", sub_q
 
-	# remove stopwords
 
+	# print "QUERRRRRYYY ", query
+	# # remove stopwords
+	# sub_queries = query
+	# stopwrds = ['than', 'as']
+	# for q in sub_queries:
+	# 	print "!!!!!! ", q
+	# 	if q in stopwrds:
+	# 		print "YES", q
+	# 		sub_queries.replace(q, '')
+
+	# print "FILTERED ", sub_queries
 
 	book_list = []
 
+	filtered_query = ""
+	for sq in sub_queries:
+		filtered_query +=sq
+		filtered_query +=" "
+	# print "HALLELUJAH ", filtered_query
+
 	# handle query according to key query terms in query
-	for sub_q in sub_queries:
+	for sub_q in raw_sub_queries:
 		if sub_q in tag_queries:
-			book_list = handle_tags(query)
+			book_list = handle_tags(filtered_query)
 		elif sub_q in page_queries:
-			book_list = handle_pages(query)
+			book_list = handle_pages(filtered_query)
 		elif sub_q in transcr_queries:
-			book_list = handle_transcr(query)
+			book_list = handle_transcr(filtered_query)
 		elif sub_q in metadata_queries:
 			print "metadata query"
 			# book_list = handle_metadata(query)

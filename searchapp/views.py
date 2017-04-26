@@ -59,7 +59,6 @@ def search(request):
 		'query': query,
 		'result_list': result_list
 	}
-	print "IN VIEWS: ", query
 	return render(request, 'searchapp/search_results.html', context)
 
 

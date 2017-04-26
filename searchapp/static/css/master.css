@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+body {
+    font-family: 'Roboto Condensed';
+    padding: 50px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	text-align: center;
+}
+
+.form-control {
+    max-width: 500px;
+}
+.results {
+    padding: 50px;
+    max-width: 800px;
+    text-align: left;
+}
+
+.page-header {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}

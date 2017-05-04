@@ -15,8 +15,8 @@
     <!-- Bootstrap Core CSS -->
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 
-    <!-- <link rel = "stylesheet" href="style.css"> -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+   <!--  <link rel = "stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 
     <link href="{% static 'css/master.css' %}" rel="stylesheet">
     
@@ -80,12 +80,16 @@
                             <div class="list-group">
                                 {% for result in result_list %}
                                     <div class="list-group-item">
-                                        <h4 class="list-group-item-heading"><em>{{ result.title }}</em></h4><hr>
+                                       <br><h4 class="list-group-item-heading"><em>{{ result.title }}</em></h4><hr>
+
+                                        <a href = "{{ result.img_url }}"><img src = "{{ result.img_url }}" style="max-height: 250px"/></a><br><br>
+
                                         <p>Total tag count: {{ result.tag_count }}</p>
                                         <p>Unique tag count: {{ result.utag_count }}</p>
                                         <p>Page count: {{ result.page_count }}</p>
                                         <p>Word count: {{ result.transcr_len }}</p>
                                     </div>
+                                    <br>
                                 {% endfor %}
                             </div>
                         </div>
@@ -98,5 +102,6 @@
         </div>
 
 <!-- {% endblock %} -->
+
 </body>
 </html>

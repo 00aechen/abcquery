@@ -34,4 +34,4 @@ def search_tags(json_data, query):
 							'tag-pages': [pg['title']]
 							})
 					else:
-						tag_results['term']
+						tag_results[tag['term']]

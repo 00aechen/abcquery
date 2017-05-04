@@ -120,6 +120,7 @@ def handle_query(query):
 		# print "BOOK LIST ", book['title']
 		book_results.append({
 			'title': book['title'],
+			'img_url': book['cover_img'],
 			'tag_count': count_tags(json_data, book['title']),
 			'utag_count': count_utags(json_data, book['title']),
 			'page_count': book['num_pages'],

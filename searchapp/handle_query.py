@@ -1,303 +1,9 @@
 import sys, json, os
-# from handle_tags import handle_tags
-# from handle_pages.py import handle_tags
+from handle_tags import handle_tags, count_tags, count_utags
+from handle_pages import handle_pages
 # from handle_metadata import handle_metadata
-# from handle_transcr import handle_transcr
+from handle_transcript import handle_transcr, transcr_len
 
-####################################################################################
-
-# counts total tags in book_title
-def count_tags(book_title):
-	global json_data
-
-	# print "COUNT_TAGS book_title ", book_title
-	tag_count = 0
-	for book in json_data:
-		if book['title'].lower() == book_title.lower():
-			for page in book['pages']:
-				if page['tags'] == None:
-					continue
-				for tag in page['tags']:
-					tag_count += int(tag['count'])
-
-	return tag_count
-
-# counts total unique tags in book_title
-def count_utags(book_title):
-	global json_data
-
-	book_dict = []	# to store already seen words
-	tag_count = 0 
-	for book in json_data:
-		if book['title'].lower() == book_title.lower():
-			for page in book['pages']:
-				if page['tags'] == None:
-					continue
-				for tag in page['tags']:
-					if tag['term'] not in book_dict:
-						book_dict.append(tag['term'])
-						tag_count+=1
-	return tag_count
-
-def tag_comp(comparison_char, query_num):
-	global json_data
-
-	book_list = []
-
-	# print "Comparison: ", comparison_char
-	if not query_num.isdigit():
-		print "invalid number"
-	else:
-		for book in json_data:
-			# print book['title']
-			tag_count = 0
-			for page in book['pages']:
-				if page['tags'] == None: # no tags case
-					continue
-				for tag in page['tags']:
-					tag_count+=tag['count']
-
-			# > cases like 'tags > 100'
-			if (comparison_char == '>' or comparison_char == 'greater' or comparison_char == 'more' or comparison_char == 'larger'):			
-				# print tag_count
-				if tag_count > int(query_num):
-					# print "IT'S TRUE"
-					book_list.append(book)
-
-			# < cases like 'tags < 100'
-			elif (comparison_char == '<' or comparison_char == 'less' or comparison_char == 'fewer' or comparison_char == 'smaller'):
-				if tag_count < int(query_num):
-					book_list.append(book)
-
-			# = cases like 'tags = 100'
-			elif (comparison_char == '=' or comparison_char == 'same' or comparison_char == 'equals' or comparison_char == 'equal'):
-				if tag_count == int(query_num):
-					book_list.append(book)
-
-			# invalid comparison
-			else:
-				sys.stdout.write('illegal comparison character')
-
-	# for book in book_list:
-	# 	print book['title']
-
-	return book_list
-
-def utag_comp(comparison_char, query_num):
-	global json_data
-
-	book_list = []
-
-	if not query_num.isdigit():
-		print "invalid number"
-	else:
-		for book in json_data:
-			tag_count = 0
-			book_dict = []
-			for page in book['pages']:
-				if page['tags'] == None: # no tags case
-					continue
-				for tag in page['tags']:
-					if tag['term'] not in book_dict:
-						book_dict.append(tag['term'])
-						tag_count+=1
-			# > cases like 'tags > 100'
-			if (comparison_char == '>' or comparison_char == 'greater' or comparison_char == 'more' or comparison_char == 'larger'):
-				if tag_count > int(query_num):
-					book_list.append(book)
-
-			# < cases like 'tags < 100'
-			elif (comparison_char == '<' or comparison_char == 'less' or comparison_char == 'fewer' or comparison_char == 'smaller'):
-				if tag_count < int(query_num):
-					# print book['title']
-					book_list.append(book)
-
-			# = cases like 'tags = 100'
-			elif (comparison_char == '=' or comparison_char == 'same' or comparison_char == 'equals' or comparison_char == 'equal'):
-				if tag_count == int(query_num):
-					book_list.append(book)
-
-			# invalid comparison
-			else:
-				sys.stdout.write('illegal comparison character')
-
-	return book_list
-
-
-def handle_tags(query):
-	global json_data
-	# print "query: ", query
-
-	query_words = query.split(" ")
-	kwords = ['>', '<', '=', 'longer', 'larger', 'greater', 'more', 'equals', 'equal', 'same', 'shorter', 'less', 'fewer', 'smaller']
-	book_list = []
-
-	if "unique" in query_words:
-		# print "reached unique"
-		for index, word in enumerate(query_words):
-			# if word == '>' or word == '<' or word == '=':
-			if word in kwords:
-				# print "index + 1>>>>>> ", query_words[index+1]
-				book_list = utag_comp(word, query_words[index+1])
-	else:
-		# print "reached normal"
-		for index, word in enumerate(query_words):
-			# print index, word
-			# if word == ">" or word == "<" or word == "=":
-			if word in kwords:
-				# print "before tag_comp"
-				# print "index + 1>>>>>> ", query_words[index+1]
-				book_list = tag_comp(word, query_words[index+1])
-
-	return book_list
-
-####################################################################################
-
-# counts total pages in book_title
-def count_pages(book_title):
-	global json_data
-	
-	page_count = 0
-	for book in json_data:
-		if book['title'].lower() == book_title.lower():
-			if book['pages'] == None:
-				return -1
-			else:
-				for page in book['pages']:
-				# else:
-				# 	for page in book['pages']:
-					page_count+=1
-	return page_count
-
-def page_comp(comparison_char, query_num):
-	global json_data
-
-	book_list = []
-	print "PLUS ONE ", query_num
-	# print "Comparison: ", comparison_char
-	if not query_num.isdigit():
-		print "invalid number"
-	else:
-		for book in json_data:
-			page_count = 0
-			# for page in book['pages']:
-			if book['pages'] == None: # no pages case
-				continue
-			else:
-				for page in book['pages']:
-					page_count+=1
-			# > cases like 'pages > 100'
-			if (comparison_char == '>' or comparison_char == 'greater' or comparison_char == 'more' or comparison_char == 'larger'):
-				# print page_count
-				if page_count > int(query_num):
-					book_list.append(book)
-
-			# < cases like 'pages < 100'
-			elif (comparison_char == '<' or comparison_char == 'less' or comparison_char == 'fewer' or comparison_char == 'smaller'):
-				if page_count < int(query_num):
-					book_list.append(book)
-
-			# = cases like 'pages = 100'
-			elif (comparison_char == '=' or comparison_char == 'same' or comparison_char == 'equals' or comparison_char == 'equal'):
-				if page_count == int(query_num):
-					book_list.append(book)
-
-			# invalid comparison
-			else:
-				sys.stdout.write('illegal comparison character')
-
-	# for book in book_list:
-	# 	print book['title']
-
-	return book_list
-
-
-def handle_pages(query):
-	global json_data
-
-	query_words = query.split(" ")
-	kwords = ['>', '<', '=', 'longer', 'larger', 'greater', 'more', 'equals', 'equal', 'same', 'shorter', 'less', 'fewer', 'smaller']
-	book_list = []
-
-	# print "reached normal"
-	for index, word in enumerate(query_words):
-		# print index, word
-		# if word == ">" or word == "<" or word == "=":
-		if word in kwords:	
-			book_list = page_comp(word, query_words[index+1])
-
-	return book_list
-
-####################################################################################
-
-# counts total transcr in book_title
-def transcr_len(book_title):
-	global json_data
-	
-	transcr_len = 0
-	for book in json_data:
-		if book['title'].lower() == book_title.lower():
-			for page in book['pages']:
-				if page['text'] == None:
-					continue
-				for transcr in page['text']:
-					transcr_len+=len(transcr.split())
-	return transcr_len
-
-def transcr_comp(comparison_char, query_num):
-	global json_data
-
-	book_list = []
-	print "PLUS ONE ", query_num
-	# print "Comparison: ", comparison_char
-	if not query_num.isdigit():
-		print "invalid number"
-	else:
-		for book in json_data:
-			# print book['title']
-			transcr_len = 0
-			for page in book['pages']:
-				if page['text'] == None:
-					continue
-				for transcr in page['text']:
-					transcr_len+=len(transcr.split())
-			# > cases like 'transcr > 100'
-			if (comparison_char == '>' or comparison_char == 'greater' or comparison_char == 'more' or comparison_char == 'larger' or comparison_char == 'longer'):
-				if transcr_len > int(query_num):
-					book_list.append(book)
-
-			# < cases like 'transcr < 100'
-			elif (comparison_char == '<' or comparison_char == 'less' or comparison_char == 'fewer' or comparison_char == 'smaller' or comparison_char == 'shorter'):
-				if transcr_len < int(query_num):
-					book_list.append(book)
-
-			# = cases like 'transcr = 100'
-			elif (comparison_char == '=' or comparison_char == 'same' or comparison_char == 'equals' or comparison_char == 'equal'):
-				if transcr_len == int(query_num):
-					book_list.append(book)
-
-			# invalid comparison
-			else:
-				sys.stdout.write('illegal comparison character')
-
-	return book_list
-
-
-def handle_transcr(query):
-	global json_data
-
-	query_words = query.split(" ")
-	kwords = ['>', '<', '=', 'longer', 'larger', 'greater', 'more', 'equals', 'equal', 'same', 'shorter', 'less', 'fewer', 'smaller']
-	book_list = []
-
-	# print "reached normal"
-	for index, word in enumerate(query_words):
-		# print index, word
-		# if word == ">" or word == "<" or word == "=":
-		if word in kwords:
-			book_list = transcr_comp(word, query_words[index+1])
-
-	return book_list
 
 ####################################################################################
 
@@ -307,7 +13,7 @@ def handle_transcr(query):
 
 def handle_query(query):
 
-	global json_data
+	# global json_data
 
 	json_data = []
 	path = '../json_files/'
@@ -319,86 +25,105 @@ def handle_query(query):
 
 	# print "JSON DATA ", json_data
 
-	# remove stopwords
-	filtered_query = query.lower()
-	print "QUERRRRRYYY ", filtered_query
-	stopwrds = ['than', 'as']
-	# for q in sub_queries:
-	# 	print "!!!!!! ", q
-	# 	if q in stopwrds:
-	# 		print "YES", q
-	# 		sub_queries.replace(q, '')
+	# split received query into multiple queries (separated by a comma)
 
-	# print "FILTERED ", sub_queries
-
-
-	# splice raw query into multiple conditions if appropriate
-	raw_sub_queries = query.lower().split(" ")
-	print ">>>>SUBQUERIES ", raw_sub_queries
-
-	sub_queries=raw_sub_queries[:]
-	for q in raw_sub_queries:
-		print q
-		if q in stopwrds:
-			sub_queries.remove(q)
-
-	print "FILTERED ", sub_queries
-
-	# lists of key query terms
-	tag_queries = ['tags', 'tag', 'terms', 'term']
-	page_queries = ['page', 'pages']
-	transcr_queries = ['transcription', 'text', 'words', 'length']
-	metadata_queries = ['location', 'place', 'date', 'year', 'metadata']
-
-	# for sub_q in sub_queries:
-	# 	print "query word: ", sub_q
-
-
-	# print "QUERRRRRYYY ", query
-	# # remove stopwords
-	# sub_queries = query
-	# stopwrds = ['than', 'as']
-	# for q in sub_queries:
-	# 	print "!!!!!! ", q
-	# 	if q in stopwrds:
-	# 		print "YES", q
-	# 		sub_queries.replace(q, '')
-
-	# print "FILTERED ", sub_queries
-
+	query_list = query.lower().split(",")
+	# print "QUERY_LIST ", query_list
+	
 	book_list = []
+	json_options=json_data
 
-	filtered_query = ""
-	for sq in sub_queries:
-		filtered_query +=sq
-		filtered_query +=" "
-	# print "HALLELUJAH ", filtered_query
+	for qry in query_list:
 
-	# handle query according to key query terms in query
-	for sub_q in raw_sub_queries:
-		if sub_q in tag_queries:
-			book_list = handle_tags(filtered_query)
-		elif sub_q in page_queries:
-			book_list = handle_pages(filtered_query)
-		elif sub_q in transcr_queries:
-			book_list = handle_transcr(filtered_query)
-		elif sub_q in metadata_queries:
-			print "metadata query"
-			# book_list = handle_metadata(query)
-		else:
-			# print "no category"
-			continue
+		# remove stopwords
+		filtered_query = qry.lower()
+		# print "QUERRRRRYYY ", filtered_query
+		stopwrds = ['than', 'as']
+		# for q in sub_queries:
+		# 	print "!!!!!! ", q
+		# 	if q in stopwrds:
+		# 		print "YES", q
+		# 		sub_queries.replace(q, '')
+
+		# print "FILTERED ", sub_queries
+
+		# splice raw query into multiple conditions if appropriate
+		raw_sub_queries = qry.lower().split(" ")
+		print ">>>>SUBQUERIES ", raw_sub_queries
+
+		sub_queries=raw_sub_queries[:]
+		for q in raw_sub_queries:
+			# print q
+			if q in stopwrds:
+				sub_queries.remove(q)
+
+		# print "FILTERED ", sub_queries
+
+		# lists of key query terms
+		tag_queries = ['tags', 'tag', 'terms', 'term']
+		page_queries = ['page', 'pages', 'pgs']
+		transcr_queries = ['transcription', 'text', 'words', 'length', 'wc', 'word']
+		metadata_queries = ['location', 'place', 'date', 'year', 'metadata']
+
+		# for sub_q in sub_queries:
+		# 	print "query word: ", sub_q
+
+		# print "QUERRRRRYYY ", query
+		# # remove stopwords
+		# sub_queries = query
+		# stopwrds = ['than', 'as']
+		# for q in sub_queries:
+		# 	print "!!!!!! ", q
+		# 	if q in stopwrds:
+		# 		print "YES", q
+		# 		sub_queries.replace(q, '')
+
+		# print "FILTERED ", sub_queries
+
+		filtered_query = ""
+		for sq in sub_queries:
+			filtered_query +=sq
+			filtered_query +=" "
+		# print "HALLELUJAH ", filtered_query		
+
+		# handle query according to key query terms in query
+		for sub_q in raw_sub_queries:
+			# for b in json_options:
+			# 	print "loop top ", b['title']
+			# 	print len(json_options)
+
+			if sub_q in tag_queries:
+				book_list = handle_tags(filtered_query, json_options)
+			elif sub_q in page_queries:
+				book_list = handle_pages(filtered_query, json_options)
+			elif sub_q in transcr_queries:
+				book_list = handle_transcr(filtered_query, json_options)
+			elif sub_q in metadata_queries:
+				print "metadata query"
+				# book_list = handle_metadata(query)
+			else:
+				# print "no category"
+				continue
+			json_options = book_list
+
+	# 			for b in json_options:
+	# 			print "another title ", b['title']
+	# 			print len(json_options)
+
+	# for b in json_options:
+	# 	print "final json_options ", b['title']
+	# 	print len(json_options)
 
 	book_results = []
 	# print "BOOK LIST ", book_list['title']
-	for book in book_list:
+	for book in json_options:
 		# print "BOOK LIST ", book['title']
 		book_results.append({
 			'title': book['title'],
-			'tag_count': count_tags(book['title']),
-			'utag_count': count_utags(book['title']),
-			'page_count': count_pages(book['title']),
-			'transcr_len': transcr_len(book['title'])
+			'tag_count': count_tags(json_data, book['title']),
+			'utag_count': count_utags(json_data, book['title']),
+			'page_count': book['num_pages'],
+			'transcr_len': transcr_len(json_data, book['title'])
 			})
 
 	return book_results
@@ -407,7 +132,7 @@ def handle_query(query):
 # test main
 def main():
 	# load all json data
-	global json_data 
+	# global json_data 
 
 	print "To exit, type \"exit\" or \"end\".\n"
 

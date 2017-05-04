@@ -4,16 +4,19 @@
 
 <head>
 <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"> -->
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script src="{% static "js/jquery.js" %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 
-    <link rel = "stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel = "stylesheet" href="style.css"> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 
     <link href="{% static 'css/master.css' %}" rel="stylesheet">
     
@@ -54,7 +57,7 @@
     </nav>
 <!-- {% block body_block %} -->
     <div class="page-header">
-        <h1>Search Results</h1>
+        <h2>Search Results</h2>
     </div>
 
     <div class="row">
@@ -63,15 +66,15 @@
             <br/>
             <form method='post' action="{% url 'search' %}" style="margin: 0">
                 {% csrf_token %}
-                <input id="search_box" type="text" name="search_box"  placeholder="Search..." >
+                <input id="search_box" type="text" name="search_box"  placeholder="Enter Another Query.." >
                 <button id="search_submit" type="submit" ><span class='glyphicon glyphicon-search'></span></button>
             </form>
             <div class='results'>
                 <div class="panel">
                     <div class="panel-heading">
-                         <h3>Search query: "{{query}}"</h3>
+                         <h3 align="center">Search query: "{{query}}"</h3>
                         {% if result_list %}
-                        <h3 class="panel-title">Results Returned: {{result_list|length}}</h3>
+                        <h3 align="center" class="panel-title">Results Returned: {{result_list|length}}</h3>
                         <!-- Display search results in an ordered list -->
                         <div class="panel-body">
                             <div class="list-group">
@@ -87,6 +90,8 @@
                             </div>
                         </div>
                     </div>
+                {% else %}
+                <h3 align="center" class="panel-title">No results match your query.</h3>
                 {% endif %}
                 </div>
             </div>

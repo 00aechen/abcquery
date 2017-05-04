@@ -10,11 +10,12 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <!-- jQuery -->
+    <script src="{% static "js/jquery.js" %}"></script>
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+
 <link href="{% static 'css/master.css' %}" rel="stylesheet">
 
 </head>
@@ -22,7 +23,6 @@
 
 <style>
 body {
-	padding: 50px;
 	padding-left: 20%;
 	padding-right:20%;
 }
@@ -31,7 +31,7 @@ h1 {
 }
 
 p {
-	font-size: 15px;
+	font-size: 18px;
 }
 
 </style>
@@ -69,21 +69,17 @@ p {
 
 <h1 align = 'center'>{{Title}}</h1>
 
-<h3>ABC Books Project and ENG 385</h3>
-<p>ABCQuery uses data from Princeton University's ABC Books project, a digital archive of rare 19th century children's alphabet books from the Cotsen Children's Library collection. <br><br>The data consists of book data (scans of book images and book transcriptions), book metadata (such as publication date and publication location), and a tag dataset consisting of terms associated with each page of each book. These tags were input into the digital archive by students of Professor William Gleason's Spring 2016 ENG 385 (Children's Literature) class. <br><br>Visit the archive <a href ="https://etc.princeton.edu/abcbooks/">here</a>.</p>
-
-<h3>Stack</h3>
+<h3><em>ABC Books Project and ENG 385</em></h3>
+<p>ABCQuery uses data from Princeton University's ABC Books project, a digital archive of rare 19th and 20th century children's alphabet books from the Cotsen Children's Library collection. <br><br>The data consists of book data (scans of book images and book transcriptions), book metadata (such as publication date and publication location), and a tag dataset consisting of terms associated with each page of each book. These tags were input into the digital archive by students of Professor William Gleason's Spring 2016 ENG 385 (Children's Literature) class. <br><br>Visit the archive <a href ="https://etc.princeton.edu/abcbooks/">here</a>.</p>
+<hr>
+<h3><em>Stack</em></h3>
 <p>ABCQuery is built using Django (back end) and Bootstrap (front end).</p>
-
-<!-- <h3>Acknowledgements</h3>
- -->
-
+<!-- <h3>Acknowledgements</h3> -->
+<br><br><br><br>
+<input type="submit" class="btn" style= "font-size: 16px" value = "Back"
+    onClick="history.go(-1);return true;">
+<br>
 </div>
 
 </body>
-<!-- jQuery -->
-    <script src="{% static "js/jquery.js" %}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
 </html>

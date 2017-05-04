@@ -2,14 +2,26 @@
 
 body {
     font-family: 'Roboto Condensed';
-    padding: 50px;
+    padding-top: 100px;
 }
 
 h1,
 h2,
-h3,
+
 h4 {
 	text-align: center;
+}
+
+h1 {
+	font-size: 50px;
+}
+
+.topnav {
+	font-size: 20px;
+}
+
+.navbar-collapse {
+	font-size: 18px;
 }
 
 .form-control {
@@ -24,6 +36,10 @@ h4 {
 .page-header {
     text-align: center;
 }
+
+/*.list-group p {
+	font-size: 20px;
+}*/
 
 form {
     text-align: center;

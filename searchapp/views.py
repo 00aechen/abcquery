@@ -23,6 +23,8 @@ def index(request):
 	
 def search(request):
 	result_list = []
+	tag_result_list = []
+	text_result_list = []
 
 	path = '../json_files/'
 	listing = os.listdir(path)

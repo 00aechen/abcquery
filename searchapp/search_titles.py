@@ -54,7 +54,7 @@ def search_tags(json_data, query):
 			else: 
 				for tag in pg['tags']:
 					# print tag['term']
-					if str(tag['term']).lower()==query:
+					if str(tag['term']).lower()==query.lower():
 						if tag['term'] not in tag_results:
 							tag_results.append({
 								'title': pg['title'],
@@ -78,7 +78,7 @@ def search_text(json_data, query):
 			else: 
 				for wrd in pg['text'].split():
 					# print tag['term']
-					if wrd.lower()==query:
+					if wrd.lower()==query.lower():
 						if wrd not in text_results:
 							text_results.append({
 								'title': pg['title'],

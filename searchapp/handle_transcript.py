@@ -40,7 +40,7 @@ def transcr_comp(json_data, comparison_char, query_num):
 					book_list.append(book)
 
 			# = cases like 'transcr = 100'
-			elif (comparison_char == '=' or comparison_char == 'same' or comparison_char == 'equals' or comparison_char == 'equal' or comparison_char == 'with'):
+			elif (comparison_char == '=' or comparison_char == 'same' or comparison_char == 'equals' or comparison_char == 'equal' or comparison_char == 'with' or comparison_char == 'contains' or comparison_char == 'containing'):
 				if transcr_len == int(query_num):
 					book_list.append(book)
 
@@ -54,7 +54,7 @@ def transcr_comp(json_data, comparison_char, query_num):
 def handle_transcr(query, json_data):
 
 	query_words = query.split(" ")
-	kwords = ['>', '<', '=', 'longer', 'larger', 'greater', 'more', 'equals', 'equal', 'same', 'shorter', 'less', 'fewer', 'smaller', 'with']
+	kwords = ['>', '<', '=', 'longer', 'larger', 'greater', 'more', 'equals', 'equal', 'same', 'shorter', 'less', 'fewer', 'smaller', 'with', 'contains', 'containing']
 	book_list = []
 
 	# print "reached normal"

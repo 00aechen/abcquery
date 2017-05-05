@@ -107,6 +107,10 @@ def handle_query(json_data, query):
 			filtered_query +=" "
 		# print "HALLELUJAH ", filtered_query		
 
+
+		# if sq not in tag_queries and sq not in page_queries and sq not in transcr_queries:
+		# 	return book_list
+
 		# handle query according to key query terms in query
 		for sub_q in raw_sub_queries:
 			# for b in json_options:
@@ -123,7 +127,6 @@ def handle_query(json_data, query):
 			# 	# print "metadata query"
 			# 	book_list = handle_metadata(json_options, filtered_query)
 			else:
-				# print "no category"
 				continue
 			json_options = book_list
 

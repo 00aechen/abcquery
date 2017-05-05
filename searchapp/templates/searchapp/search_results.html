@@ -78,9 +78,9 @@
 
     <div class='results'>
         <div class="row">
-        {% if text_result_list %}{% if tag_result_list %}
+        {% if text_result_list or tag_result_list %}
             <div class="col col-md-6">
-                {% endif %}{% endif %}
+                {% endif %}
                 <div class="panel-heading">
                      <!-- <h3 align="center">Search query: "{{query}}"</h3> -->
                     {% if result_list %}
@@ -110,9 +110,9 @@
                                 </div>
                             {% endfor %}
                         </div>
-                {% if text_result_list %}{% if tag_result_list %}
+                {% if text_result_list or tag_result_list %}
                 </div>
-                {% endif %}{% endif %}
+                {% endif %}
                 {% else %}
                 <h3 align="center" class="panel-title">No titles match your query.</h3><hr>
                 {% endif %}
@@ -126,7 +126,7 @@
                 <div class='tag-results'>
                     <div class="panel-heading">
                         <!-- <h3 align="center">Search query: "{{query}}"</h3> -->
-                        <h3 align="center" class="panel-title">Tagged on {{tag_result_list|length}} Pages</h3><hr>
+                        <h3 align="center" class="panel-title">Tagged on {{tag_result_list|length}} Page(s)</h3><hr>
                         {% for result in tag_result_list %}
                         <div class="row">
                             <p><a href='{{result.nid}}'>{{ result.title }}</a></p>
@@ -142,7 +142,7 @@
                 <div class='text-results'>
                     <div class="panel-heading">
                         <!-- <h3 align="center">Search query: "{{query}}"</h3> -->
-                        <h3 align="center" class="panel-title">{{text_result_list|length}} Instances Found in Text</h3><hr>
+                        <h3 align="center" class="panel-title">{{text_result_list|length}} Instance(s) Found in Text</h3><hr>
                         {% for result in text_result_list %}
                         <div class="row">
                             <p><a href='{{result.nid}}'>{{ result.title }}</a></p>

@@ -2,6 +2,7 @@ import sys, json, os
 from handle_tags import handle_tags, count_tags, count_utags
 from handle_pages import handle_pages
 # from handle_metadata import handle_metadata
+from search_titles import search_titles, search_tags, search_text
 from handle_transcript import handle_transcr, transcr_len
 
 
@@ -11,19 +12,34 @@ from handle_transcript import handle_transcr, transcr_len
 
 ####################################################################################
 
-def handle_query(query):
+
+def handle_query(json_data, query):
 
 	# global json_data
 
-	json_data = []
-	path = '../json_files/'
-	listing = os.listdir(path)
-	for jsonfile in listing:
-		json_fname = "../json_files/" + jsonfile
-		with open(json_fname) as data_file:
-			json_data.append(json.load(data_file))
+	# json_data = []
+	metadata_json = []
 
-	# print "JSON DATA ", json_data
+
+	# lists of key query terms
+	tag_queries = ['tags', 'tag', 'terms', 'term']
+	page_queries = ['page', 'pages', 'pgs']
+	transcr_queries = ['transcription', 'text', 'words', 'length', 'wc', 'word']
+	metadata_queries = ['location', 'place', 'date', 'year', 'metadata']
+
+
+	# path = '../json_files/'
+	# listing = os.listdir(path)
+	# # print "LISTING ", listing
+	# # for jsonfile in listing:
+	# # 	json_fname = "../json_files/" + jsonfile
+	# # 	# print "Print ", json_fname
+	# # 	# print "abspath ", os.path.abspath(json_fname)
+	# # 	with open(json_fname) as data_file:
+	# # 		json_data.append(json.load(data_file))
+	# json_fname = "../json_files/" + "metadata_mod.json"
+	# with open(json_fname) as data_file:
+	# 	json_data = json.load(data_file)
 
 	# split received query into multiple queries (separated by a comma)
 
@@ -34,6 +50,15 @@ def handle_query(query):
 	json_options=json_data
 
 	for qry in query_list:
+
+
+		if (len(qry.split())==1):
+			title_book_list = search_titles(json_options, qry)
+			tag_book_list = search_tags(json_options, qry)
+			text_book_list = search_text(json_options, qry)
+			# for bk in text_book_list:
+			# 	print "WHERE ARE YOU ", bk['title']
+			json_options = title_book_list
 
 		# remove stopwords
 		filtered_query = qry.lower()
@@ -59,11 +84,7 @@ def handle_query(query):
 
 		# print "FILTERED ", sub_queries
 
-		# lists of key query terms
-		tag_queries = ['tags', 'tag', 'terms', 'term']
-		page_queries = ['page', 'pages', 'pgs']
-		transcr_queries = ['transcription', 'text', 'words', 'length', 'wc', 'word']
-		metadata_queries = ['location', 'place', 'date', 'year', 'metadata']
+		
 
 		# for sub_q in sub_queries:
 		# 	print "query word: ", sub_q
@@ -106,13 +127,13 @@ def handle_query(query):
 				continue
 			json_options = book_list
 
-	# 			for b in json_options:
-	# 			print "another title ", b['title']
-	# 			print len(json_options)
+		# 			for b in json_options:
+		# 			print "another title ", b['title']
+		# 			print len(json_options)
 
-	# for b in json_options:
-	# 	print "final json_options ", b['title']
-	# 	print len(json_options)
+		# for b in json_options:
+		# 	print "final json_options ", b['title']
+		# 	print len(json_options)
 
 	book_results = []
 	# print "BOOK LIST ", book_list['title']
@@ -121,10 +142,13 @@ def handle_query(query):
 		book_results.append({
 			'title': book['title'],
 			'img_url': book['cover_img'],
+			'nid_url': book['nid_url'],
 			'tag_count': count_tags(json_data, book['title']),
 			'utag_count': count_utags(json_data, book['title']),
 			'page_count': book['num_pages'],
-			'transcr_len': transcr_len(json_data, book['title'])
+			'transcr_len': transcr_len(json_data, book['title']),
+			'pub_date': book['pub_date'],
+			'pub_location': book['pub_location'],
 			})
 
 	return book_results

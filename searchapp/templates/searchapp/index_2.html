@@ -64,9 +64,9 @@
                     <li>
                         <a href="{% url 'about' %}">About</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#feedback/">Feedback</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -84,15 +84,55 @@
                 <div class="col-lg-12">
                     <div class="intro-message">
                         <h1>ABCQuery</h1>
-                        <h2>Explore the student tag data from ENG 385, Spring 2016</h2>
+                        <h2>Explore the ABC Books Archive Data from Spring 2016</h2>
                         <hr class="intro-divider">
-                        <form method='post' action="{% url 'search' %}" style="margin: 0">
+                        <form class="navbar-form" method='post' action="{% url 'search' %}" style="margin: 0">
                             {% csrf_token %}
-                            <div>
-                            <input id="search_box" type="text" name="search_box"  placeholder="Enter Query..." >
-                            <button id="search_submit" type="submit" ><span class='glyphicon glyphicon-search'></span></button></div>
+                            <div class="input-group add-on">
+                                <!-- <input class="form-control" id="search_box" style="width:60%" type="text" name="search_box"  placeholder="Enter Query..." ><button id="search_submit" type="submit" ><span class='glyphicon glyphicon-search'></span></button></input> -->
+                                
+                                <input class="form-control" style="min-width:500px" placeholder="Enter Query..." name="search_box" id="search_box" type="text">
+                                <div class="input-group-btn" style="display:inline-block float:left" ><button class="btn btn-default" style="display:inline-block float:left" type="submit"><i class="glyphicon glyphicon-search"></i></button></div>
+                            </div>
 
                         </form>
+
+                          <!-- <form class="navbar-form" role="search">
+    <div class="input-group add-on">
+      <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+      <div class="input-group-btn"><button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button></div>
+    </div>
+  </form> -->
+                        <br><br>
+                        
+                        <!-- <div class="panel-group"> -->
+                          <!-- <div class="panel"> -->
+                            <div class="panel-heading">
+                              <h4 class="panel-title" >
+                                <a data-toggle="collapse" href="#collapse1">Need suggestions for how to query the data?</a>
+                              <!-- </h4> -->
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse">
+                              <div class="panel-body"> 
+                                <p align="center">Search comparative queries about tag count, unique tag count, page count, or word count.</p>
+                                <p align="center"><small>Ex. "books with more than 500 tags", "page count > 100", "transcription shorter than 800", etc.</small></p><br>
+                                <!-- </div>
+                                <div class='col'> -->
+                                <p align="center">Search by word through tags and transcription.</p>
+                                <p align="center"><small>Ex. "tag:bear", "transcription contains the word boy", etc.</small></p><br>
+                                <!-- </div>
+                                <div class='col'> -->
+                                <p align="center">Search by a book's metadata, such as publication year or publication location.</p>
+                                <p align="center"><small>Ex. "published in New York", "published in 1920", etc.</small></p><br>
+                                <p align="center">Separate multiple queries using commas.</p>
+                                <p align="center"><small>Ex. "books with more than 500 tags, fewer than 50 pages", etc.</small></p><br>
+                            </div>
+                              </div>
+                            <!-- </div> -->
+                          
+                       <!--  </div> -->
+
+                        </div>
                     </div>
                 </div>
             </div>

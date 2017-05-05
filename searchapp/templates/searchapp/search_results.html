@@ -46,62 +46,114 @@
                     <li>
                         <a href="{% url 'about' %}">About</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#feedback/">Feedback</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
-<!-- {% block body_block %} -->
+
     <div class="page-header">
         <h2>Search Results</h2>
-    </div>
+    </div><br>
 
-    <div class="row">
 
-        <div class="panel " align='center'>
+<div class="panel " align='center'>
             <br/>
-            <form method='post' action="{% url 'search' %}" style="margin: 0">
-                {% csrf_token %}
-                <input id="search_box" type="text" name="search_box"  placeholder="Enter Another Query.." >
-                <button id="search_submit" type="submit" ><span class='glyphicon glyphicon-search'></span></button>
-            </form>
-            <div class='results'>
-                <div class="panel">
-                    <div class="panel-heading">
-                         <h3 align="center">Search query: "{{query}}"</h3>
-                        {% if result_list %}
-                        <h3 align="center" class="panel-title">Results Returned: {{result_list|length}}</h3>
-                        <!-- Display search results in an ordered list -->
-                        <div class="panel-body">
-                            <div class="list-group">
-                                {% for result in result_list %}
-                                    <div class="list-group-item">
-                                       <br><h4 class="list-group-item-heading"><em>{{ result.title }}</em></h4><hr>
-
-                                        <a href = "{{ result.img_url }}"><img src = "{{ result.img_url }}" style="max-height: 250px"/></a><br><br>
-
-                                        <p>Total tag count: {{ result.tag_count }}</p>
-                                        <p>Unique tag count: {{ result.utag_count }}</p>
-                                        <p>Page count: {{ result.page_count }}</p>
-                                        <p>Word count: {{ result.transcr_len }}</p>
-                                    </div>
-                                    <br>
-                                {% endfor %}
+            <form class="navbar-form" method='post' action="{% url 'search' %}" style="margin: 0">
+                            {% csrf_token %}
+                            <div class="input-group add-on" style="float:center">
+                                <!-- <input class="form-control" id="search_box" style="width:60%" type="text" name="search_box"  placeholder="Enter Query..." ><button id="search_submit" type="submit" ><span class='glyphicon glyphicon-search'></span></button></input> -->
+                                
+                                <input class="form-control" style="min-width: 500px" placeholder="Enter Query..." name="search_box" id="search_box" type="text">
+                                <div class="input-group-btn"><button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button></div>
                             </div>
+
+                        </form><br>
+
+
+
+    <div class='results'>
+        <div class="row">
+        {% if text_result_list %}{% if tag_result_list %}
+            <div class="col col-md-6">
+                
+                {% endif %}{% endif %}
+                <div class="panel-heading">
+                     <h3 align="center">Search query: "{{query}}"</h3>
+                    {% if result_list %}
+                    <h3 align="center" class="panel-title">Results Returned: {{result_list|length}}</h3>
+                    <!-- Display search results in an ordered list -->
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {% for result in result_list %}
+                                <div class="list-group-item row">
+                                    <div >
+                                        <a href = "{{ result.img_url }}"><img src = "{{ result.img_url }}" style="max-height: 220px" class="pull-left gap-right"/></a><br>
+                                    </div>
+                                    <div>
+                                        <h4 class="list-group-item-heading"><em><strong><a href='{{result.nid_url}}'>{{ result.title }}</a></strong></em></h4>
+                                        <p align="center"><small>
+                                            Published in
+                                        {% for location in result.pub_location %}
+                                           {{location}}{% if not forloop.last %}, {%endif%}
+                                        {% endfor %}
+                                        in {{result.pub_date}}
+                                    </small></p><hr>
+                                        <p class="book_info">Total tag count: {{ result.tag_count }}</p>
+                                        <p class="book_info">Unique tag count: {{ result.utag_count }}</p>
+                                        <p class="book_info">Page count: {{ result.page_count }}</p>
+                                        <p class="book_info">Word count: {{ result.transcr_len }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                    </div>
+                {% if text_result_list %}{% if tag_result_list %}
+                </div>
+                {% endif %}{% endif %}
                 {% else %}
                 <h3 align="center" class="panel-title">No results match your query.</h3>
                 {% endif %}
+                
+                </div>
+                
+            </div>
+
+        {% if tag_result_list %}
+            <div class="col col-md-3">
+                <div class='tag-results'>
+                    <div class="panel-heading">
+                        <h3 align="center">Tag: "{{query}}"</h3>
+                        <h3 align="center" class="panel-title">Tagged on {{tag_result_list|length}} Pages</h3><hr>
+                        {% for result in tag_result_list %}
+                        <div class="row">
+                            <p><a href='{{result.nid}}'>{{ result.title }}</a></p>
+                        </div>     
+                        {% endfor %}
+                    </div>   
+                </div>
+            </div>
+        {% endif %} 
+        {% if text_result_list %}
+            <div class="col col-md-3">
+                <div class='text-results'>
+                    <div class="panel-heading">
+                        <h3 align="center">Word: "{{query}}"</h3>
+                        <h3 align="center" class="panel-title">{{text_result_list|length}} Instances Found in Text</h3><hr>
+                        {% for result in text_result_list %}
+                        <div class="row">
+                            <p><a href='{{result.nid}}'>{{ result.title }}</a></p>
+                        </div>     
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-
-<!-- {% endblock %} -->
+        {% endif %}
+    </div>
 
 </body>
 </html>

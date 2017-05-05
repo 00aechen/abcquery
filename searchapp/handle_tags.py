@@ -104,7 +104,7 @@ def utag_comp(json_data, comparison_char, query_num):
 					book_list.append(book)
 
 			# = cases like 'tags = 100'
-			elif (comparison_char == '=' or comparison_char == 'same' or comparison_char == 'equals' or comparison_char == 'equal'):
+			elif (comparison_char == '=' or comparison_char == 'same' or comparison_char == 'equals' or comparison_char == 'equal' or comparison_char == 'with'):
 				if tag_count == int(query_num):
 					book_list.append(book)
 
@@ -121,7 +121,7 @@ def handle_tags(query, json_data):
 	# print "query: ", query
 
 	query_words = query.split(" ")
-	kwords = ['>', '<', '=', 'longer', 'larger', 'greater', 'more', 'equals', 'equal', 'same', 'shorter', 'less', 'fewer', 'smaller']
+	kwords = ['>', '<', '=', 'longer', 'larger', 'greater', 'more', 'equals', 'equal', 'same', 'shorter', 'less', 'fewer', 'smaller', 'with']
 	book_list = []
 
 	if "unique" in query_words:

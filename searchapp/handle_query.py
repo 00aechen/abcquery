@@ -25,7 +25,7 @@ def handle_query(json_data, query):
 	tag_queries = ['tags', 'tag', 'terms', 'term']
 	page_queries = ['page', 'pages', 'pgs']
 	transcr_queries = ['transcription', 'text', 'words', 'length', 'wc', 'word']
-	metadata_queries = ['location', 'place', 'date', 'year', 'metadata']
+	metadata_queries = ['publication', 'location', 'place', 'date', 'year', 'metadata']
 
 
 	# path = '../json_files/'
@@ -119,9 +119,9 @@ def handle_query(json_data, query):
 				book_list = handle_pages(filtered_query, json_options)
 			elif sub_q in transcr_queries:
 				book_list = handle_transcr(filtered_query, json_options)
-			elif sub_q in metadata_queries:
-				print "metadata query"
-				# book_list = handle_metadata(query)
+			# elif sub_q in metadata_queries:
+			# 	# print "metadata query"
+			# 	book_list = handle_metadata(json_options, filtered_query)
 			else:
 				# print "no category"
 				continue

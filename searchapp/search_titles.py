@@ -60,8 +60,7 @@ def search_tags(json_data, query):
 								'title': pg['title'],
 								'nid': "https://etc.princeton.edu/abcbooks/node/"+ pg['nid'],
 								})
-
-	print tag_results
+	# print tag_results
 	return tag_results
 
 

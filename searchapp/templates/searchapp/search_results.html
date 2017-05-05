@@ -74,18 +74,17 @@
 
                         </form><br>
 
-
+<h3 align="center">Search query: "{{query}}"</h3>
 
     <div class='results'>
         <div class="row">
         {% if text_result_list %}{% if tag_result_list %}
             <div class="col col-md-6">
-                
                 {% endif %}{% endif %}
                 <div class="panel-heading">
-                     <h3 align="center">Search query: "{{query}}"</h3>
+                     <!-- <h3 align="center">Search query: "{{query}}"</h3> -->
                     {% if result_list %}
-                    <h3 align="center" class="panel-title">Results Returned: {{result_list|length}}</h3>
+                    <h3 align="center" class="panel-title">{{result_list|length}} Title(s) Match</h3>
                     <!-- Display search results in an ordered list -->
                     <div class="panel-body">
                         <div class="list-group">
@@ -115,7 +114,7 @@
                 </div>
                 {% endif %}{% endif %}
                 {% else %}
-                <h3 align="center" class="panel-title">No results match your query.</h3>
+                <h3 align="center" class="panel-title">No titles match your query.</h3><hr>
                 {% endif %}
                 
                 </div>
@@ -126,7 +125,7 @@
             <div class="col col-md-3">
                 <div class='tag-results'>
                     <div class="panel-heading">
-                        <h3 align="center">Tag: "{{query}}"</h3>
+                        <!-- <h3 align="center">Search query: "{{query}}"</h3> -->
                         <h3 align="center" class="panel-title">Tagged on {{tag_result_list|length}} Pages</h3><hr>
                         {% for result in tag_result_list %}
                         <div class="row">
@@ -137,11 +136,12 @@
                 </div>
             </div>
         {% endif %} 
+
         {% if text_result_list %}
             <div class="col col-md-3">
                 <div class='text-results'>
                     <div class="panel-heading">
-                        <h3 align="center">Word: "{{query}}"</h3>
+                        <!-- <h3 align="center">Search query: "{{query}}"</h3> -->
                         <h3 align="center" class="panel-title">{{text_result_list|length}} Instances Found in Text</h3><hr>
                         {% for result in text_result_list %}
                         <div class="row">
